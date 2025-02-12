@@ -1,0 +1,72 @@
+#include <iostream>
+
+class Example
+{
+public:
+	Example() {
+        data = new int[1000];
+        for (int i = 0; i < 1000; ++i) {
+            data[i] = i;
+        }
+        std::cout << "Constructor" << std::endl;
+	}
+
+    Example(const Example& e) {
+        data = new int[1000];
+        for (int i = 0; i < 1000; ++i) {
+            data[i] = e.data[i];
+        }
+        std::cout << "Copy Constructor" << std::endl;
+    }
+
+    ~Example() {
+        delete[] data;
+        data = nullptr;
+        // std::cout << "Destructor" << std::endl;
+    }
+
+//private:
+    int* data;
+};
+
+void show(Example &e)
+{
+    for (int i = 0; i < 10; ++i) {
+        std::cout << e.data[i] << ' ';
+    }
+    std::cout << std::endl;
+}
+
+
+template <typename T>
+void func(T val)
+{
+    show(val);
+}
+
+template <typename T>
+class RefWrapper
+{
+public:
+    RefWrapper(T& e) : ref(e) {}
+
+    operator T&() { return ref; }
+
+private:
+    T& ref;
+};
+
+template <typename T>
+RefWrapper<T> my_ref(T& val)
+{
+    return RefWrapper<T>(val);
+}
+
+int ref_test()
+{
+    std::cout << "ref test" << std::endl;
+    std::cout << "======================" << std::endl;
+    Example e;
+    func(std::ref<Example>(e));
+    return 0;
+}
