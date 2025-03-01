@@ -2,9 +2,10 @@
 #include <vector>
 
 extern int _1004(void);
+extern int _1005(void);
 extern int _1006(void);
 extern int _1007(void);
-extern int _1005(void);
+extern int _1008(void);
 
 void test()
 {
@@ -16,9 +17,7 @@ void test()
 
 int main()
 {
-    //_1004();
-    //_1006();
-    _1005();
+    _1008();
     //test();
     return 0;
 }
