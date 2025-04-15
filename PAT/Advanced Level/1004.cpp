@@ -1,50 +1,56 @@
 #include <iostream>
-#include <queue>
-#include <set>
 #include <string>
 #include <vector>
 #include <map>
 
 using namespace std;
 
-struct sub_tree
-{
-    sub_tree() {}
-    sub_tree(string id) : id{ id } {}
-
-    string id;
-    vector<sub_tree> children;
-};
+void dfs(map<string, vector<string>>& ch_tree, string id, int level, int& max_level, vector<int>& out);
 
 int _1004()
 {
     int n, m;
+    int level = 0;
+    int max_level = 0;
+    vector<int> out;
+    map<string, vector<string>> ch_tree;
     cin >> n >> m;
-    if (n == 0) {
+
+    if (n == 0)
         return 0;
-    }
-    map<string, sub_tree*> my_map;
-    sub_tree *root, *p = nullptr;
-    for (int i = 0; i < m; ++m) {
+
+    for (int i = 0; i < m; ++i) {
         int k;
         string id;
         cin >> id >> k;
-        sub_tree my_tree(id);
+        vector<string> children;
         for (int j = 0; j < k; ++j) {
-            cin >> id;
-            my_tree.children.push_back(sub_tree(id));
+            string ids;
+            cin >> ids;
+            children.push_back(ids);
         }
-        my_map[my_tree.id] = &my_tree;
+        ch_tree[id] = move(children);
     }
 
-    for (auto& pair : my_map) {
-        for (auto& tree : pair.second->children) {
-            auto it = my_map.find(tree.id);
-            if (it != my_map.end()) {
-
-            }
-        }
+    out.resize(100);
+    dfs(ch_tree, "01", level, max_level, out);
+    for (int i = 0; i < max_level; ++i) {
+        cout << out[i] << ' ';
     }
+    cout << out[max_level] << endl;
 
     return 0;
+}
+
+void dfs(map<string, vector<string>>& ch_tree, string id, int level, int& max_level, vector<int>& out)
+{
+    if (ch_tree.find(id) != ch_tree.end()) { // c_id 有子节点
+        max_level = max(max_level, ++level);
+        for (const auto& c_id : ch_tree[id]) {
+            dfs(ch_tree, c_id, level, max_level, out);
+        }
+    }
+    else {
+        ++out[level];
+    }
 }
