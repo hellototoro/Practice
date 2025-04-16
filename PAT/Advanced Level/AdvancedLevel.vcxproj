@@ -143,6 +143,7 @@
     <ClCompile Include="1002.cpp" />
     <ClCompile Include="1003.cpp" />
     <ClCompile Include="1004.cpp" />
+    <ClCompile Include="1005.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

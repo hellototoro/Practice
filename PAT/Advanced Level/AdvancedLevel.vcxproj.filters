@@ -27,6 +27,9 @@
     <ClCompile Include="1003.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="1005.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
